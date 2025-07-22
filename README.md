@@ -57,6 +57,21 @@ You can run SWC builds with or without the plugin, and with the old or new SWC v
 
 Each command will print the SWC version and the execution time for the build.
 
+## Run Full Benchmark
+
+To run all benchmarks (all build variants, 3 times each, with summary and comparison), use:
+
+```sh
+./benchmark_all.sh
+```
+
+This script will:
+
+- Run all four build variants (old/new × with_plugin/without_plugin) three times each
+- Print intermediate and average times for each variant
+- Show how much slower with_plugin is compared to without_plugin
+- Show how much faster or slower the new version is compared to the old (without_plugin)
+
 ## Notes
 
 - The `src/` directory is generated and not tracked by git.
