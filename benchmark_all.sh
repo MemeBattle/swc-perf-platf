@@ -12,6 +12,43 @@ CONFIGS=(
 # For storing results
 RESULTS=()
 
+# Print system info (cross-platform: macOS & Linux)
+UNAME=$(uname)
+if [[ "$UNAME" == "Darwin" ]]; then
+  # macOS
+  CPU_INFO=$(sysctl -n machdep.cpu.brand_string)
+  PHYSICAL_CORES=$(sysctl -n hw.physicalcpu)
+  LOGICAL_CORES=$(sysctl -n hw.logicalcpu)
+  MEM_BYTES=$(sysctl -n hw.memsize)
+  MEM_GB=$(echo "scale=2; $MEM_BYTES/1024/1024/1024" | bc)
+  OS_INFO=$(sw_vers | grep ProductVersion | awk '{print $2}')
+elif [[ "$UNAME" == "Linux" ]]; then
+  # Linux
+  CPU_INFO=$(lscpu | grep 'Model name' | awk -F: '{print $2}' | xargs)
+  PHYSICAL_CORES=$(lscpu | grep 'Core(s) per socket' | awk -F: '{print $2}' | xargs)
+  LOGICAL_CORES=$(nproc)
+  MEM_KB=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+  MEM_GB=$(echo "scale=2; $MEM_KB/1024/1024" | bc)
+  OS_INFO=$(lsb_release -d 2>/dev/null | awk -F: '{print $2}' | xargs)
+  if [[ -z "$OS_INFO" ]]; then
+    OS_INFO=$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)
+  fi
+else
+  CPU_INFO="Unknown"
+  PHYSICAL_CORES="Unknown"
+  LOGICAL_CORES="Unknown"
+  MEM_GB="Unknown"
+  OS_INFO="Unknown"
+fi
+
+echo "==== System Info ===="
+echo "CPU: $CPU_INFO"
+echo "Physical cores: $PHYSICAL_CORES"
+echo "Logical cores: $LOGICAL_CORES"
+echo "Memory: $MEM_GB GB"
+echo "OS: $OS_INFO"
+echo
+
 for CONFIG in "${CONFIGS[@]}"; do
   VERSION=$(echo $CONFIG | awk '{print $1}')
   PLUGIN=$(echo $CONFIG | awk '{print $2}')
