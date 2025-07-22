@@ -1,0 +1,10 @@
+{
+  "name": "swc-new",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@swc/core": "1.13.1",
+    "@swc/plugin-noop": "9.0.0",
+    "@swc/cli": "^0.7.8"
+  }
+} 

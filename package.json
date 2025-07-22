@@ -1,0 +1,18 @@
+{
+  "name": "swc-perf-platf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:old:without_plugin": "./run_swc.sh old without_plugin",
+    "build:old:with_plugin": "./run_swc.sh old with_plugin",
+    "build:new:without_plugin": "./run_swc.sh new without_plugin",
+    "build:new:with_plugin": "./run_swc.sh new with_plugin",
+    "generate-files": "rm -rf src/* && node generate-files.js",
+    "install:deps": "cd swc-old && npm install && cd ../swc-new && npm install",
+    "benchmark": "./benchmark_all.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

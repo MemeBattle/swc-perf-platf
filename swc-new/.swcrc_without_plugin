@@ -1,0 +1,32 @@
+{
+  "sourceMaps": false,
+  "jsc": {
+    "externalHelpers": false,
+    "parser": {
+      "syntax": "ecmascript",
+      "jsx": true
+    },
+    "loose": true,
+    "transform": {
+      "react": {
+        "runtime": "automatic",
+        "useBuiltins": true,
+        "development": false,
+        "refresh": false
+      }
+    }
+  },
+  "env": {
+    "dynamicImport": true,
+    "coreJs": "3.33",
+    "mode": "entry",
+    "loose": true,
+    "bugfixes": true,
+    "targets": {
+      "node": "20.10.0"
+    }
+  },
+  "module": {
+    "type": "es6"
+  }
+}

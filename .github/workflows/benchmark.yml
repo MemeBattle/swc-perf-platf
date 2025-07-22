@@ -1,0 +1,34 @@
+name: SWC Benchmark
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  benchmark:
+    name: Benchmark on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Install dependencies
+        run: npm run install:deps
+
+      - name: Generate test files
+        run: npm run generate-files
+
+      - name: Benchmark all (with summary)
+        run: |
+          chmod +x benchmark_all.sh
+          ./benchmark_all.sh
